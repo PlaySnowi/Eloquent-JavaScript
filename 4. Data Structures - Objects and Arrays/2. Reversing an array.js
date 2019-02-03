@@ -60,3 +60,5 @@ let arrayValue = [1, 2, 3, 4, 5];
 reverseArrayInPlace(arrayValue);
 console.log(arrayValue);
 // → [5, 4, 3, 2, 1]
+
+// reverseArrayInPlace runs faster and I'd expect it to be useful in more situations
