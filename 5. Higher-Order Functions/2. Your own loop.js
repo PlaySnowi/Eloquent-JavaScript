@@ -7,10 +7,23 @@ Then it calls the body function, giving it the current value. Finally, it calls 
 
 When defining the function, you can use a regular loop to do the actual looping. */
 
-// Your code here.
+// My solution
+function loop(value, test, update, body) {
+  while (value) {
+    if (test(value) === false) break;
+    body(value);
+    value = update(value);
+  }
+}
 
+// Book solution
+function loop(start, test, update, body) {
+  for (let value = start; test(value); value = update(value)) {
+    body(value);
+  }
+}
 
 loop(3, n => n > 0, n => n - 1, console.log);
-// → 3
-// → 2
-// → 1
+// 3
+// 2
+// 1

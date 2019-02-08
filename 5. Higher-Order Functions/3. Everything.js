@@ -16,9 +16,35 @@ If the loop runs to its end without finding such an element, we know that all el
 To build every on top of some, we can apply De Morgan’s laws, which state that a && b equals !(!a || !b).
 This can be generalized to arrays, where all elements in the array match if there is no element in the array that does not match. */
 
+// My solution - Version using a loop
 function every(array, test) {
-  // Your code here.
-  
+  let passed = true;
+  for (let element of array) {
+    if (!test(element)) {
+      passed = false;
+    }
+  }
+  return passed
+}
+
+// Book solution - Version using a loop
+function every(array, predicate) {
+  for (let element of array) {
+    if (!predicate(element)) return false;
+  }
+  return true;
+}
+
+// My solution - Version using the some method
+function every(array, test) {
+  return !array.some(function(n) {
+    return !test(n)
+  })
+}
+
+// Book solution - Version using the some method
+function every2(array, predicate) {
+  return !array.some(element => !predicate(element));
 }
 
 console.log(every([1, 3, 5], n => n < 10));
