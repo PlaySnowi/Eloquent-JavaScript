@@ -1,7 +1,7 @@
 /* The standard JavaScript environment provides another data structure called Set.
 Like an instance of Map, a set holds a collection of values.
-Unlike Map, it does not associate other values with those—it just tracks which values are part of the set.
-A value can be part of a set only once—adding it again doesn’t have any effect.
+Unlike Map, it does not associate other values with those — it just tracks which values are part of the set.
+A value can be part of a set only once — adding it again doesn’t have any effect.
 
 Write a class called Group (since Set is already taken).
 Like Set, it has add, delete, and has methods.
@@ -25,8 +25,62 @@ Don’t forget to overwrite the property holding the members with the newly filt
 
 The from method can use a for/of loop to get the values out of the iterable object and call add to put them into a newly created group. */
 
+// My solution
 class Group {
-  // Your code here.
+  constructor() {
+    this.groupArray = [];
+  }
+
+  add(valueToAdd) {
+    if (this.groupArray.indexOf(valueToAdd) === -1) return this.groupArray.push(valueToAdd);
+  }
+
+  delete(valueToDelete) {
+    const result = this.groupArray.filter(v => v !== valueToDelete);
+    this.groupArray = result;
+  }
+
+  has(valueToVerify) {
+    if (this.groupArray.indexOf(valueToVerify) === -1) return false
+    else return true
+  }
+
+  static from(iterable) {
+    let group = new Group();
+    for (let i of iterable) {
+      group.add(i);
+    }
+    return group;
+  }
+}
+
+// Book solution
+class Group {
+  constructor() {
+    this.members = [];
+  }
+
+  add(value) {
+    if (!this.has(value)) {
+      this.members.push(value);
+    }
+  }
+
+  delete(value) {
+    this.members = this.members.filter(v => v !== value);
+  }
+
+  has(value) {
+    return this.members.includes(value);
+  }
+
+  static from(collection) {
+    let group = new Group;
+    for (let value of collection) {
+      group.add(value);
+    }
+    return group;
+  }
 }
 
 let group = Group.from([10, 20]);

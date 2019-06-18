@@ -14,7 +14,111 @@ Every time next is called, it checks whether it is done and, if not, moves past 
 
 The Group class itself gets a method named by Symbol.iterator that, when called, returns a new instance of the iterator class for that group. */
 
-// Your code here (and the code from the previous exercise)
+// My solution
+class Group {
+  constructor() {
+    this.groupArray = [];
+    Group.iterate();
+  }
+
+  add(valueToAdd) {
+    if (this.groupArray.indexOf(valueToAdd) === -1) return this.groupArray.push(valueToAdd);
+  }
+
+  delete(valueToDelete) {
+    const result = this.groupArray.filter(v => v !== valueToDelete);
+    this.groupArray = result;
+  }
+
+  has(valueToVerify) {
+    if (this.groupArray.indexOf(valueToVerify) === -1) return false
+    else return true
+  }
+
+  static from(iterable) {
+    let group = new Group();
+    for (let i of iterable) {
+      group.add(i);
+    }
+    return group;
+  }
+
+  static iterate() {
+    Group.prototype[Symbol.iterator] = function () {
+      return new GroupIterator(this);
+    };
+  }
+}
+
+class GroupIterator {
+  constructor(group) {
+    this.array = group.groupArray;
+    this.x = 0;
+  }
+
+  next() {
+    if (this.x === this.array.length) return { done: true };
+
+    let value = this.array[this.x];
+
+    this.x++;
+
+    return { value, done: false };
+  }
+}
+
+// Book solution
+class Group {
+  constructor() {
+    this.members = [];
+  }
+
+  add(value) {
+    if (!this.has(value)) {
+      this.members.push(value);
+    }
+  }
+
+  delete(value) {
+    this.members = this.members.filter(v => v !== value);
+  }
+
+  has(value) {
+    return this.members.includes(value);
+  }
+
+  static from(collection) {
+    let group = new Group;
+    for (let value of collection) {
+      group.add(value);
+    }
+    return group;
+  }
+
+  [Symbol.iterator]() {
+    return new GroupIterator(this);
+  }
+}
+
+class GroupIterator {
+  constructor(group) {
+    this.group = group;
+    this.position = 0;
+  }
+
+  next() {
+    if (this.position >= this.group.members.length) {
+      return { done: true };
+    } else {
+      let result = {
+        value: this.group.members[this.position],
+        done: false
+      };
+      this.position++;
+      return result;
+    }
+  }
+}
 
 for (let value of Group.from(["a", "b", "c"])) {
   console.log(value);
