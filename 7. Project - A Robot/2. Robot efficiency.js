@@ -98,7 +98,6 @@ function findRoute(graph, from, to) {
             }
         }
     }
-
 }
 
 function goalOrientedRobot({ place, parcels }, route) {
@@ -193,6 +192,7 @@ function lazyRobot({ place, parcels }, route) {
             return (pickUp ? 0.5 : 0) - route.length;
         }
         route = routes.reduce((a, b) => score(a) > score(b) ? a : b).route;
+        debugger
     }
 
     return { direction: route[0], memory: route.slice(1) };
